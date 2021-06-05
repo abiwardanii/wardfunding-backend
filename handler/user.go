@@ -104,4 +104,6 @@ func(h *userHandler) CheckEmailAvaibility( c *gin.Context){
 	c.JSON(http.StatusOK, response)
 }
 
-func (h *userHandler) UploadAvatar(c *gin.Context)
+func (h *userHandler) UploadAvatar(c *gin.Context) {
+	
+}
