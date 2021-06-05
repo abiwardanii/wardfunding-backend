@@ -2,6 +2,7 @@ package handler
 
 import (
 	"net/http"
+	"wardfunding/helper"
 	"wardfunding/user"
 
 	"github.com/gin-gonic/gin"
@@ -26,6 +27,8 @@ func (h *userHandler) RegisterUser(c *gin.Context) {
 	 if err != nil {
 		c.JSON(http.StatusBadRequest, nil)
 	 }
- 
-	 c.JSON(http.StatusOK, user)
+	 
+	 response := helper.APIResponse("Account has been registered", http.StatusOK, "success", user)
+	 
+	 c.JSON(http.StatusOK, response)
 }
