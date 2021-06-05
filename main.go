@@ -2,6 +2,7 @@ package main
 
 import (
 	"log"
+	"wardfunding/auth"
 	"wardfunding/handler"
 	"wardfunding/user"
 
@@ -18,7 +19,9 @@ func main() {
 	}
 	userRepository := user.NewRepository(db)
 	userService := user.NewService(userRepository)
-	userHandler := handler.NewUserHandler(userService)
+	authService := auth.NewService()
+
+	userHandler := handler.NewUserHandler(userService, authService)
 
 	router := gin.Default()
 
