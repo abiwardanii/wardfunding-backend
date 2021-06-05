@@ -70,6 +70,8 @@ func (h *userHandler) Login(c *gin.Context) {
 	response := helper.APIResponse("Successfuly Loggedin", http.StatusOK, "success", formatter)
 
 	c.JSON(http.StatusOK, response)
+}
 
-
+func CheckEmailAvaibility( c *gin.Context){
+	
 }
