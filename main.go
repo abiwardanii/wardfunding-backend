@@ -1,6 +1,7 @@
 package main
 
 import (
+	"fmt"
 	"log"
 	"wardfunding/handler"
 	"wardfunding/user"
@@ -18,6 +19,17 @@ func main() {
 	  }
 	  userRepository := user.NewRepository(db)
 	  userService := user.NewService(userRepository)
+
+	  userByEmail, err := userRepository.FindByEmail("xian@gmail.com")
+	  if err != nil {
+		  fmt.Println(err.Error())
+	  }
+	  if (userByEmail.ID == 0) {
+		  fmt.Println("user tidak ditemukan")
+	  } else{
+		fmt.Println(userByEmail.Name)
+	  }
+	  
 	  userHandler := handler.NewUserHandler(userService)
 
 	  router := gin.Default()
