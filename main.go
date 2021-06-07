@@ -20,7 +20,6 @@ func main() {
 	userRepository := user.NewRepository(db)
 	userService := user.NewService(userRepository)
 	authService := auth.NewService()
-
 	userHandler := handler.NewUserHandler(userService, authService)
 
 	router := gin.Default()
@@ -34,3 +33,10 @@ func main() {
 
 	router.Run()
 }
+
+// ambil nilai header authorization
+// dari header authorization, ambil tokennya saja
+// validasi token
+// ambil user_id
+// ambil user dari db berdasarkan user_id dari service
+// set context isinya user 
