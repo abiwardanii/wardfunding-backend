@@ -5,6 +5,7 @@ import (
 	"net/http"
 	"strings"
 	"wardfunding/auth"
+	"wardfunding/campaign"
 	"wardfunding/handler"
 	"wardfunding/helper"
 	"wardfunding/user"
@@ -22,6 +23,10 @@ func main() {
 		log.Fatal(err.Error())
 	}
 	userRepository := user.NewRepository(db)
+	campaignRepository := campaign.NewRepository(db)
+
+	//coba revert
+
 	userService := user.NewService(userRepository)
 	authService := auth.NewService()
 	userHandler := handler.NewUserHandler(userService, authService)
