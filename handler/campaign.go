@@ -30,3 +30,7 @@ func (h *campaignHandler) GetCampaigns(c *gin.Context){
 	c.JSON(http.StatusOK, response)
 
 }
+
+func (h *campaignHandler) GetCampaign(c *gin.Context) {
+	
+}
