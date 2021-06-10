@@ -8,6 +8,7 @@ import (
 	"wardfunding/campaign"
 	"wardfunding/handler"
 	"wardfunding/helper"
+	"wardfunding/transaction"
 	"wardfunding/user"
 
 	"github.com/dgrijalva/jwt-go"
@@ -25,6 +26,7 @@ func main() {
 	}
 	userRepository := user.NewRepository(db)
 	campaignRepository := campaign.NewRepository(db)
+	transactionRepository := transaction.NewRepository(db)
 
 	userService := user.NewService(userRepository)
 	campaignService := campaign.NewService(campaignRepository)
