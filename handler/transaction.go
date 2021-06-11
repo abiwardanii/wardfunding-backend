@@ -4,6 +4,7 @@ import (
 	"net/http"
 	"wardfunding/helper"
 	"wardfunding/transaction"
+	"wardfunding/user"
 
 	"github.com/gin-gonic/gin"
 )
@@ -25,7 +26,10 @@ func(h *transactionHandler) GetCampaignTransactions(c *gin.Context) {
 		c.JSON(http.StatusBadRequest, response)
 		return
 	}
+	currentUser := c.MustGet("currentUser").(user.User)
 
+	input.User = currentUser
+	
 	transactions, err := h.service.GetTransactionsByCampaignID(input)
 	if err != nil {
 		response := helper.APIResponse("Failed to get campaign's transactions", http.StatusBadRequest, "error", nil)
