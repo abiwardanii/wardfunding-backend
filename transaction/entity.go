@@ -2,6 +2,7 @@ package transaction
 
 import (
 	"time"
+	"wardfunding/campaign"
 	"wardfunding/user"
 )
 
@@ -13,6 +14,7 @@ type Transaction struct {
 	Status     string
 	Code       string
 	User	   user.User
+	Campaign   campaign.Campaign
 	CreatedAt  time.Time 
 	UpdatedAt  time.Time
 }
