@@ -20,12 +20,11 @@ func NewService(repository Repository, campaignRepository campaign.Repository) *
 }
 
 func(s *service) GetTransactionsByCampaignID(input GetCampaignTransactionsInput) ([]Transaction, error) {
-	
 	campaign, err := s.campaignRepository.FindByID(input.ID)
 	if err != nil {
 		return []Transaction{}, err
 	}
-
+	
 	if campaign.User.ID != input.User.ID {
 		return []Transaction{}, errors.New("not an owner of the campaign")
 	} 

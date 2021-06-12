@@ -51,6 +51,6 @@ func(h *transactionHandler) GetUserTransaction(c *gin.Context) {
 		c.JSON(http.StatusBadRequest, response)
 		return
 	}
-	response := helper.APIResponse("User's transaction", http.StatusOK, "success", transactions)
+	response := helper.APIResponse("User's transaction", http.StatusOK, "success", transaction.FormatUserTransactions(transactions))
 	c.JSON(http.StatusOK, response)
 }
