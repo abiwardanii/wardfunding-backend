@@ -8,6 +8,7 @@ import (
 	"wardfunding/campaign"
 	"wardfunding/handler"
 	"wardfunding/helper"
+	"wardfunding/payment"
 	"wardfunding/transaction"
 	"wardfunding/user"
 
@@ -31,7 +32,8 @@ func main() {
 	userService := user.NewService(userRepository)
 	campaignService := campaign.NewService(campaignRepository)
 	authService := auth.NewService()
-	transactionService := transaction.NewService(transactionRepository, campaignRepository)
+	paymentService := payment.NewService()
+	transactionService := transaction.NewService(transactionRepository, campaignRepository, paymentService)
 	
 	userHandler := handler.NewUserHandler(userService, authService)
 	campaignHandler := handler.NewCampaignHandler(campaignService)
