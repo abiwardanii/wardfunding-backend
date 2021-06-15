@@ -44,3 +44,4 @@ func (s *service) GetPaymentURL(transaction Transaction, user user.User) (string
 	} 
 	return snapTokenResp.RedirectURL, nil
 }
+
