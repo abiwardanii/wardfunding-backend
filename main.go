@@ -13,6 +13,7 @@ import (
 	"wardfunding/user"
 
 	"github.com/dgrijalva/jwt-go"
+	"github.com/gin-contrib/cors"
 	"github.com/gin-gonic/gin"
 	"gorm.io/driver/mysql"
 	"gorm.io/gorm"
@@ -41,7 +42,7 @@ func main() {
 
 	router := gin.Default()
 	router.Static("/images", "./images")
-
+	router.Use(cors.Default())
 	api := router.Group("/api/v1")
 	
 	api.POST("/users", userHandler.RegisterUser)
