@@ -52,10 +52,10 @@ func (h *userHandler) Create(c *gin.Context) {
 		return
 	}	
 
-	c.Redirect(http.StatusFound, "users")
+	c.Redirect(http.StatusFound, "/users")
 }
 
-func (h *userHandler) Edit( c *gin.Context) {
+func (h *userHandler) Edit(c *gin.Context) {
 	idParam := c.Param("id")
 	id, _ := strconv.Atoi(idParam)
 
@@ -65,5 +65,27 @@ func (h *userHandler) Edit( c *gin.Context) {
 	}
 
 	c.HTML(http.StatusOK, "user_edit.html", registeredUser)
+
+}
+
+func (h *userHandler) Update(c *gin.Context) {
+	idParam := c.Param("id")
+	id, _ := strconv.Atoi(idParam)
+
+	var input user.FormUpdateUserInput
+
+	err := c.ShouldBind(&input)
+	if err != nil {
+
+	}
+
+	input.ID = id
+
+	_, err = h.userService.UpdateUser(input)
+	if err != nil {
+		c.HTML(http.StatusInternalServerError, "error.html", nil)
+		return
+	}
+	c.Redirect(http.StatusFound, "/users")
 
 }
