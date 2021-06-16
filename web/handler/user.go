@@ -2,6 +2,7 @@ package handler
 
 import (
 	"net/http"
+	"strconv"
 	"wardfunding/user"
 
 	"github.com/gin-gonic/gin"
@@ -35,7 +36,7 @@ func (h *userHandler) Create(c *gin.Context) {
 	err := c.ShouldBind(&input)
 	if err != nil {
 		input.Error = err
-		c.HTML(http.StatusOK, "user_new.html", input)
+		c.HTML(http.StatusInternalServerError, "user_new.html", input)
 		return 
 	}
 
@@ -52,4 +53,17 @@ func (h *userHandler) Create(c *gin.Context) {
 	}	
 
 	c.Redirect(http.StatusFound, "users")
+}
+
+func (h *userHandler) Edit( c *gin.Context) {
+	idParam := c.Param("id")
+	id, _ := strconv.Atoi(idParam)
+
+	registeredUser, err := h.userService.GetUserByID(id)
+	if err != nil {
+		c.HTML(http.StatusInternalServerError, "error.html", nil)
+	}
+
+	c.HTML(http.StatusOK, "user_edit.html", registeredUser)
+
 }
