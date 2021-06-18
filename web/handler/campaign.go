@@ -1,6 +1,7 @@
 package handler
 
 import (
+	"fmt"
 	"net/http"
 	"strconv"
 	"wardfunding/campaign"
@@ -88,3 +89,49 @@ func (h *campaignHandler) NewImage(c *gin.Context) {
 	c.HTML(http.StatusOK, "campaign_image.html", gin.H{"ID": id})
 }
 
+func (h *campaignHandler) CreateImage(c *gin.Context) {
+	file, err := c.FormFile("file")
+	if err != nil {
+		c.HTML(http.StatusInternalServerError, "error.html", nil)
+		return
+	}
+
+	idParam := c.Param("id")
+	id, _ := strconv.Atoi(idParam)
+
+	existingCampaign, err := h.campaignService.GetCampaignByID(campaign.GetCampaignDetailInput{ID: id})
+	if err != nil {
+		c.HTML(http.StatusInternalServerError, "error.html", nil)
+		return
+	}
+
+	userID := existingCampaign.UserID
+
+	path := fmt.Sprintf("images/%d-%s", userID, file.Filename)
+
+	err = c.SaveUploadedFile(file, path)
+	if err != nil {
+		c.HTML(http.StatusInternalServerError, "error.html", nil)
+		return
+	}
+
+	createCampaignImageInput := campaign.CreateCampaignImageInput{}
+	createCampaignImageInput.CampaignID = id
+	createCampaignImageInput.IsPrimary = true
+
+	userCampaign, err := h.userService.GetUserByID(userID)
+	if err != nil {
+		c.HTML(http.StatusInternalServerError, "error.html", nil)
+		return
+	}
+
+	createCampaignImageInput.User = userCampaign
+
+	_, err = h.campaignService.SaveCampaignImage(createCampaignImageInput, path)
+	if err != nil {
+		c.HTML(http.StatusInternalServerError, "error.html", nil)
+		return
+	}
+
+	c.Redirect(http.StatusFound, "/campaigns")
+}
