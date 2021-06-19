@@ -1,11 +1,10 @@
 # CMS WardFunding Backend
 
 ### Overview
-```html
+
 <p align="center">
   <img src="overview/overview.png" >
 </p>
-```
 
 ### Technology
 - Go v1.16.5
