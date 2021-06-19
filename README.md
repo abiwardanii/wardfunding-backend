@@ -41,7 +41,7 @@ go run main.go
 ### APIs Campaigns 
 | Method | Endpoint | Auth Middleware | Description |
 | --- | --- | --- | --- |
-| GET | /campaigns| : :x: : | List of Campaign |
+| GET | /campaigns| ::x:: | List of Campaign |
 | GET | /campaigns/:id | :x: | Get Detail Campaign |
 | POST | /campaigns | :x: | Create Campaign |
 | PUT | /campaigns/:id | :white_check_mark: | Update Campaign |
