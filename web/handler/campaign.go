@@ -10,16 +10,16 @@ import (
 	"github.com/gin-gonic/gin"
 )
 
-type campaignHandler struct {
+type campaignWebHandler struct {
 	campaignService campaign.Service
 	userService		user.Service
 }
 
-func NewCampaignHandler(campaignService campaign.Service, userService user.Service) *campaignHandler {
-	return &campaignHandler{campaignService, userService}
+func NewCampaignHandler(campaignService campaign.Service, userService user.Service) *campaignWebHandler {
+	return &campaignWebHandler{campaignService, userService}
 }
 
-func (h *campaignHandler) Index(c *gin.Context) {
+func (h *campaignWebHandler) Index(c *gin.Context) {
 	campaigns, err := h.campaignService.GetCampaigns(0)
 	if err != nil {
 		c.HTML(http.StatusInternalServerError, "error.html", nil)
@@ -28,7 +28,7 @@ func (h *campaignHandler) Index(c *gin.Context) {
 	c.HTML(http.StatusOK, "campaign_index.html", gin.H{"campaigns": campaigns})
 }
 
-func (h *campaignHandler) New(c *gin.Context) {
+func (h *campaignWebHandler) New(c *gin.Context) {
 	users, err := h.userService.GetAllUsers()
 	if err != nil {
 		c.HTML(http.StatusInternalServerError, "error.html", nil)
@@ -41,7 +41,7 @@ func (h *campaignHandler) New(c *gin.Context) {
 	c.HTML(http.StatusOK, "campaign_new.html", input)
 }
 
-func (h *campaignHandler) Create(c *gin.Context) {
+func (h *campaignWebHandler) Create(c *gin.Context) {
 	var input campaign.FormCreateCampaignInput
 
 	err := c.ShouldBind(&input)
@@ -82,14 +82,14 @@ func (h *campaignHandler) Create(c *gin.Context) {
 	c.Redirect(http.StatusFound, "/campaigns")
 }
 
-func (h *campaignHandler) NewImage(c *gin.Context) {
+func (h *campaignWebHandler) NewImage(c *gin.Context) {
 	idParam := c.Param("id")
 	id, _ := strconv.Atoi(idParam)
 
 	c.HTML(http.StatusOK, "campaign_image.html", gin.H{"ID": id})
 }
 
-func (h *campaignHandler) CreateImage(c *gin.Context) {
+func (h *campaignWebHandler) CreateImage(c *gin.Context) {
 	file, err := c.FormFile("file")
 	if err != nil {
 		c.HTML(http.StatusInternalServerError, "error.html", nil)
@@ -136,7 +136,7 @@ func (h *campaignHandler) CreateImage(c *gin.Context) {
 	c.Redirect(http.StatusFound, "/campaigns")
 }
 
-func (h *campaignHandler) Edit(c *gin.Context) {
+func (h *campaignWebHandler) Edit(c *gin.Context) {
 	idParam := c.Param("id")
 	id, _ := strconv.Atoi(idParam)
 
@@ -157,7 +157,7 @@ func (h *campaignHandler) Edit(c *gin.Context) {
 	c.HTML(http.StatusOK, "campaign_edit.html", input)
 }
 
-func (h *campaignHandler) Update(c *gin.Context) {
+func (h *campaignWebHandler) Update(c *gin.Context) {
 	idParam := c.Param("id")
 	id, _ := strconv.Atoi(idParam)
 
@@ -202,7 +202,7 @@ func (h *campaignHandler) Update(c *gin.Context) {
 	c.Redirect(http.StatusFound, "/campaigns")
 }
 
-func (h *campaignHandler) Show(c *gin.Context) {
+func (h *campaignWebHandler) Show(c *gin.Context) {
 	idParam := c.Param("id")
 	id, _ := strconv.Atoi(idParam)
 
